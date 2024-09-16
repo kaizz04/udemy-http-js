@@ -3,7 +3,7 @@ const postTemplate = document.getElementById('single-post');
 
 
 
-function sendHttpRequest(method, url){
+function sendHttpRequest(method, url, data){
     const promise = new Promise((resolve,reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open(method,url);
@@ -15,7 +15,7 @@ function sendHttpRequest(method, url){
           
          
          };
-         xhr.send();
+         xhr.send(JSON.stringify(data));
     
     });
 
@@ -37,8 +37,20 @@ async function fetchPosts(){
 
 }
 
+function createPost(title,content){
+    const userId = Math.random();
+    const post = {
+        title:title,
+        body:content,
+        userId:userId
+    };
+
+    sendHttpRequest('POST', 'https://jsonplaceholder.typicode.com/posts');
+}
+
 
 fetchPosts();
+createPost('DUMMY','A dummy post!');
 
 
 
